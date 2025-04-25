@@ -12,12 +12,44 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+			"file/newFile": [
+				{
+					"command": "wearable-vscode-extension.helloWorld"
+				}
+			]
+		},
     "commands": [
       {
         "command": "wearable-vscode-extension.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "wearable-vscode-extension.createNewProject",
+        "title": "Create New Project"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "wearable-explorer",
+          "title": "Wearable Explorer",
+          "icon": "media/wearable-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "wearable-explorer": [
+        {
+          "id": "wearable-explorer-tutorials",
+          "name": "Wearable Robot Tutorials"
+        },
+        {
+          "id": "wearable-explorer-projects",
+          "name": "Wearable Robot Projects"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
