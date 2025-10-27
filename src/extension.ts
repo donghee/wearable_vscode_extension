@@ -16,7 +16,6 @@ function getWebviewContent(title: string, url: string) {
       </style>
     </head>
     <body>
-	 <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300" />
      <iframe src="${url}"></iframe>
     </body>
     </html>
@@ -48,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const projectsProvider = new ProjectsProvider();
 	const tutorialsProvider = new TutorialsProvider();
 	context.subscriptions.push(
-    	vscode.window.registerTreeDataProvider('wearable-explorer-projects', projectsProvider)
+    	vscode.window.registerTreeDataProvider('wearable-explorer-projects', projectsProvider),
 		vscode.window.registerTreeDataProvider('wearable-explorer-tutorials', tutorialsProvider)
 	);
 
@@ -85,10 +84,18 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		newProjectButton.iconPath = new vscode.ThemeIcon('add'); // 플러스 아이콘 추가
 
+		const simulatorButton = new TutorialItem('Simulator: Gazebo', vscode.TreeItemCollapsibleState.None);
+		simulatorButton.command = {
+			command: 'wearable-vscode-extension.openTutorialInEditor',
+			title: 'Run Simulator',
+			arguments: ['Simulator', 'https://wearable.baribarilab.com/novnc/vnc.html?path=novnc/websockify?resize=remote&autoconnect=true']
+		};
+
 		return Promise.resolve([
 			newProjectButton,
-			new ProjectItem('Project: Wearable Robot 1', vscode.TreeItemCollapsibleState.None),
-			new ProjectItem('Project: Wearable Robot 2', vscode.TreeItemCollapsibleState.None)
+			new ProjectItem('Project Build', vscode.TreeItemCollapsibleState.None),
+			simulatorButton,
+			new ProjectItem('Open Terminal', vscode.TreeItemCollapsibleState.None)
 		]);
 	}
 }
@@ -115,19 +122,28 @@ class TutorialsProvider implements vscode.TreeDataProvider<TutorialItem> {
 	}
 
 	getChildren(): Thenable<TutorialItem[]> {
-		const tutorial1 = new TutorialItem('Tutorial: Wearable Robot 1', vscode.TreeItemCollapsibleState.None);
+		const tutorial1 = new TutorialItem('Tutorial: Getting Started Wearable Robot', vscode.TreeItemCollapsibleState.None);
 		tutorial1.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
 			title: 'Open Tutorial',
-			arguments: ['Wearable Robot 1', 'https://www.google.com/webhp?igu=1']
+			arguments: ['Getting Started', 'https://google.com/webhp?igu=1']
 		};
 
-		const tutorial2 = new TutorialItem('Tutorial: Wearable Robot 2', vscode.TreeItemCollapsibleState.None);
+		const tutorial2 = new TutorialItem('Tutorial: ROS', vscode.TreeItemCollapsibleState.None);
 		tutorial2.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
 			title: 'Open Tutorial',
-			arguments: ['Wearable Robot 2', 'https://daum.net']
+			arguments: ['ROS', 'https://wiki.ros.org']
 		};
+	
+		/*
+		const tutorial2 = new TutorialItem('Simulator: Gazebo', vscode.TreeItemCollapsibleState.None);
+		tutorial2.command = {
+			command: 'wearable-vscode-extension.openTutorialInEditor',
+			title: 'Open Simulator',
+			arguments: ['Simulator', 'https://wearable.baribarilab.com/novnc/vnc.html?path=novnc/websockify?resize=remote&autoconnect=true']
+		};
+		*/
 
 		return Promise.resolve([tutorial1, tutorial2]);
 	}

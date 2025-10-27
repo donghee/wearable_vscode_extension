@@ -1,21 +1,18 @@
 import * as vscode from 'vscode';
-//import { createDockerImage, runDockerContainer, downloadProject, attachToContainer, openProjectInVSCode } from '../utils/dockerUtils';
+import { createDockerImage, runDockerContainer, downloadProject, attachToContainer, openProjectInVSCode } from '../utils/dockerUtils';
 
 export function createNewProject() {
-    const dockerImageName = 'ros2_humble';
-    const containerName = 'wearable_robot';
+    const dockerImageName = 'ghcr.io/donghee/wearable_robot_eval';
+    const containerName = 'wearable';
     const projectRepoUrl = 'https://github.com/donghee/wearable_robot_upper_limb';
 
-    vscode.window.showInformationMessage('Docker image and container already exist. Skipping creation.');
-    return;
-
     // Check if the Docker image or container already exists
-    // if (checkDockerImageExists(dockerImageName) && checkDockerContainerExists(containerName)) {
-    //     vscode.window.showInformationMessage('Docker image and container already exist. Skipping creation.');
-    //     //attachToContainer(containerName);
-    //     //openProjectInVSCode();
-    //     return;
-    // }
+    if (checkDockerImageExists(dockerImageName) && checkDockerContainerExists(containerName)) {
+        vscode.window.showInformationMessage('Docker image and container already exist. Skipping creation.');
+        attachToContainer(containerName);
+        //openProjectInVSCode();
+        return;
+    }
 
     // Create Docker image and run the container
     // createDockerImage(dockerImageName)
