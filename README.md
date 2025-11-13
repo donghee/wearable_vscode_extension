@@ -1,71 +1,46 @@
-# wearable-vscode-extension README
+# Wearable Robot Evaluation
 
-This is the README for your extension "wearable-vscode-extension". After writing up a brief description, we recommend including the following sections.
+VSCode extension for Wearable Robot Evaluation.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+This extension provides tools and utilities for evaluating wearable robot systems:
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Project management for wearable robot evaluation projects
+- Tutorial resources for wearable robot development
+- Integrated development environment for robot evaluation workflows
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Visual Studio Code version 1.99.0 or higher
+- Node.js for running the extension
 
-## Extension Settings
+## Getting Started
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Install the extension
+2. Open the Wearable Robot Evaluation view from the activity bar
+3. Create a new project or browse tutorials
 
-For example:
+## Extension Commands
 
-This extension contributes the following settings:
+This extension contributes the following commands:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `Hello World`: Test command for the extension
+- `Create New Project`: Create a new wearable robot evaluation project
 
-## Known Issues
+## Views
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+The extension adds the following views to the activity bar:
+
+- **Wearable Robot Tutorials**: Access tutorials and learning resources
+- **Wearable Robot Projects**: Manage your evaluation projects
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
+Initial release of Wearable Robot Evaluation extension.
 
-Initial release of ...
+## License
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+See LICENSE.md for details.

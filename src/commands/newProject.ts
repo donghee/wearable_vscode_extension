@@ -1,18 +1,22 @@
 import * as vscode from 'vscode';
-import { createDockerImage, runDockerContainer, downloadProject, attachToContainer, openProjectInVSCode } from '../utils/dockerUtils';
+//import { createDockerImage, runDockerContainer, downloadProject, attachToContainer, openProjectInVSCode } from '../utils/dockerUtils';
 
 export function createNewProject() {
-    const dockerImageName = 'ghcr.io/donghee/wearable_robot_eval';
-    const containerName = 'wearable';
-    const projectRepoUrl = 'https://github.com/donghee/wearable_robot_upper_limb';
+    // open new project
+    vscode.window.showInformationMessage('Creating a new project...');
+    vscode.commands.executeCommand('vscode.openFolder');
+
+    //const dockerImageName = 'ghcr.io/donghee/wearable_robot_eval';
+    //const containerName = 'wearable';
+    //const projectRepoUrl = 'https://github.com/donghee/wearable_robot_upper_limb';
 
     // Check if the Docker image or container already exists
-    if (checkDockerImageExists(dockerImageName) && checkDockerContainerExists(containerName)) {
-        vscode.window.showInformationMessage('Docker image and container already exist. Skipping creation.');
-        attachToContainer(containerName);
-        //openProjectInVSCode();
-        return;
-    }
+    //if (checkDockerImageExists(dockerImageName) && checkDockerContainerExists(containerName)) {
+    //    vscode.window.showInformationMessage('Docker image and container already exist. Skipping creation.');
+    //    attachToContainer(containerName);
+    //    //openProjectInVSCode();
+    //    return;
+    //}
 
     // Create Docker image and run the container
     // createDockerImage(dockerImageName)

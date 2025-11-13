@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { createNewProject } from './commands/newProject';
+import { Script } from 'vm';
 
 function getWebviewContent(title: string, url: string) {
   return `
@@ -41,8 +42,25 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const newProjectCommand = vscode.commands.registerCommand('wearable-vscode-extension.createNewProject', createNewProject);
 
+	const runScriptCommand = vscode.commands.registerCommand('wearable-vscode-extension.runScript', async (scriptPath: string) => {
+		const terminal = vscode.window.createTerminal('Script Execution');
+		terminal.show();
+		terminal.sendText(`bash ${scriptPath}`);
+	});
+
+	const runScriptHiddenCommand = vscode.commands.registerCommand('wearable-vscode-extension.runScriptHidden', async (scriptPath: string) => {
+		const terminal = vscode.window.createTerminal({
+			name: 'Background Script',
+			hideFromUser: true
+		});
+		terminal.sendText(`bash ${scriptPath}`);
+		vscode.window.showInformationMessage(`Successfully executed script: ${scriptPath}`);
+	});
+
 	context.subscriptions.push(helloWorldCommand);
 	context.subscriptions.push(newProjectCommand);
+	context.subscriptions.push(runScriptCommand);
+	context.subscriptions.push(runScriptHiddenCommand);
 
 	const projectsProvider = new ProjectsProvider();
 	const tutorialsProvider = new TutorialsProvider();
@@ -84,27 +102,68 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		newProjectButton.iconPath = new vscode.ThemeIcon('add'); // 플러스 아이콘 추가
 
-		const simulatorButton = new TutorialItem('Simulator: Gazebo', vscode.TreeItemCollapsibleState.None);
+		const simulatorButton = new ScriptItem('Start Simulation: Mujoco', vscode.TreeItemCollapsibleState.None, './docker/simulation.sh');
 		simulatorButton.command = {
-			command: 'wearable-vscode-extension.openTutorialInEditor',
-			title: 'Run Simulator',
-			arguments: ['Simulator', 'https://wearable.baribarilab.com/novnc/vnc.html?path=novnc/websockify?resize=remote&autoconnect=true']
+			command: 'wearable-vscode-extension.runScriptHidden',
+			title: 'Start Simulation: Mujoco',
+			arguments: ['./docker/simulation.sh']
 		};
+		simulatorButton.iconPath = new vscode.ThemeIcon('play-circle'); // 재생 아이콘 추가
+
+		const controllerButton = new ScriptItem('Start Controller: ROS', vscode.TreeItemCollapsibleState.None, './docker/controller.sh');
+		controllerButton.command = {
+			command: 'wearable-vscode-extension.runScript',
+			title: 'Start Controller: ROS',
+			arguments: ['./docker/controller.sh']
+		};
+		controllerButton.iconPath = new vscode.ThemeIcon('run'); 
+		new vscode.ThemeIcon('')
+
+		const stopButton = new ScriptItem('Stop Simulation', vscode.TreeItemCollapsibleState.None, './docker/stop.sh');
+		stopButton.command = {
+			command: 'wearable-vscode-extension.runScriptHidden',
+			title: 'Stop Simulation',
+			arguments: ['./docker/stop.sh']
+		};
+		stopButton.iconPath = new vscode.ThemeIcon('debug-stop'); // 정지 아이콘 추가
+
+		const buildButton = new ScriptItem('Build Project for Hardware', vscode.TreeItemCollapsibleState.None, './docker/deploy.sh');
+		buildButton.command = {
+			command: 'wearable-vscode-extension.runScriptHidden',
+			title: 'Build Project for Hardware',
+			arguments: ['./docker/deploy.sh']
+		};
+		buildButton.iconPath = new vscode.ThemeIcon('gear'); // 톱니바퀴 아이콘 추가
 
 		return Promise.resolve([
 			newProjectButton,
-			new ProjectItem('Project Build', vscode.TreeItemCollapsibleState.None),
 			simulatorButton,
-			new ProjectItem('Open Terminal', vscode.TreeItemCollapsibleState.None)
+			controllerButton,
+			stopButton,
+			buildButton,
 		]);
 	}
 }
-
 
 class ProjectItem extends vscode.TreeItem {
 	constructor(
 		public readonly label: string,
 		public readonly collapsibleState: vscode.TreeItemCollapsibleState
+	) {
+		super(label, collapsibleState);
+		this.tooltip = `${this.label}`;
+		this.description = '';
+	}
+
+	declare command?: vscode.Command;
+	declare iconPath?: string | vscode.IconPath;
+}
+
+class ScriptItem extends vscode.TreeItem {
+	constructor(
+		public readonly label: string,
+		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+		public readonly scriptPath: string
 	) {
 		super(label, collapsibleState);
 		this.tooltip = `${this.label}`;
@@ -126,7 +185,7 @@ class TutorialsProvider implements vscode.TreeDataProvider<TutorialItem> {
 		tutorial1.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
 			title: 'Open Tutorial',
-			arguments: ['Getting Started', 'https://google.com/webhp?igu=1']
+			arguments: ['Getting Started', 'http://localhost:9999']
 		};
 
 		const tutorial2 = new TutorialItem('Tutorial: ROS', vscode.TreeItemCollapsibleState.None);
