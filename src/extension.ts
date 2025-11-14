@@ -181,11 +181,11 @@ class TutorialsProvider implements vscode.TreeDataProvider<TutorialItem> {
 	}
 
 	getChildren(): Thenable<TutorialItem[]> {
-		const tutorial1 = new TutorialItem('Tutorial: Getting Started Wearable Robot', vscode.TreeItemCollapsibleState.None);
+		const tutorial1 = new TutorialItem('Getting Started Wearable Robot', vscode.TreeItemCollapsibleState.None);
 		tutorial1.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
 			title: 'Open Tutorial',
-			arguments: ['Getting Started', 'http://localhost:9999']
+			arguments: ['Getting Started', 'http://localhost:5005']
 		};
 
 		const tutorial2 = new TutorialItem('Tutorial: ROS', vscode.TreeItemCollapsibleState.None);
