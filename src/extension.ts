@@ -102,6 +102,14 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		newProjectButton.iconPath = new vscode.ThemeIcon('add'); // 플러스 아이콘 추가
 
+		const buildSimulatorButton = new ScriptItem('Build Simulation', vscode.TreeItemCollapsibleState.None, './docker/build_simulation.sh');
+		buildSimulatorButton.command = {
+			command: 'wearable-vscode-extension.runScript',
+			title: 'Build Simulation',
+			arguments: ['./docker/build_simulation.sh']
+		};
+		buildSimulatorButton.iconPath = new vscode.ThemeIcon('gear'); // 기어 아이콘 추가
+
 		const simulatorButton = new ScriptItem('Start Simulation: Mujoco', vscode.TreeItemCollapsibleState.None, './docker/simulation.sh');
 		simulatorButton.command = {
 			command: 'wearable-vscode-extension.runScriptHidden',
@@ -137,6 +145,7 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 
 		return Promise.resolve([
 			newProjectButton,
+			buildSimulatorButton,
 			simulatorButton,
 			controllerButton,
 			stopButton,
