@@ -102,29 +102,29 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		newProjectButton.iconPath = new vscode.ThemeIcon('add'); // 플러스 아이콘 추가
 
-		const buildSimulatorButton = new ScriptItem('Build Simulation', vscode.TreeItemCollapsibleState.None, './docker/build_simulation.sh');
+		const buildSimulatorButton = new ScriptItem('Build', vscode.TreeItemCollapsibleState.None, './docker/build_simulation.sh');
 		buildSimulatorButton.command = {
 			command: 'wearable-vscode-extension.runScript',
-			title: 'Build Simulation',
+			title: 'Build',
 			arguments: ['./docker/build_simulation.sh']
 		};
 		buildSimulatorButton.iconPath = new vscode.ThemeIcon('gear'); // 기어 아이콘 추가
 
-		const simulatorButton = new ScriptItem('Start Simulation: Mujoco', vscode.TreeItemCollapsibleState.None, './docker/simulation.sh');
+		const simulatorButton = new ScriptItem('Start Simulation', vscode.TreeItemCollapsibleState.None, './docker/simulation.sh');
 		simulatorButton.command = {
 			command: 'wearable-vscode-extension.runScriptHidden',
-			title: 'Start Simulation: Mujoco',
+			title: 'Start Simulation',
 			arguments: ['./docker/simulation.sh']
 		};
-		simulatorButton.iconPath = new vscode.ThemeIcon('play-circle'); // 재생 아이콘 추가
+		simulatorButton.iconPath = new vscode.ThemeIcon('check'); // 체크 아이콘 추가
 
-		const controllerButton = new ScriptItem('Start Controller: ROS', vscode.TreeItemCollapsibleState.None, './docker/controller.sh');
+		const controllerButton = new ScriptItem('Run Simulation', vscode.TreeItemCollapsibleState.None, './docker/controller.sh');
 		controllerButton.command = {
 			command: 'wearable-vscode-extension.runScript',
-			title: 'Start Controller: ROS',
+			title: 'Run Simulation',
 			arguments: ['./docker/controller.sh']
 		};
-		controllerButton.iconPath = new vscode.ThemeIcon('run'); 
+		controllerButton.iconPath = new vscode.ThemeIcon('run'); // 재생 아이콘 추가
 		new vscode.ThemeIcon('')
 
 		const stopButton = new ScriptItem('Stop Simulation', vscode.TreeItemCollapsibleState.None, './docker/stop.sh');
@@ -135,13 +135,13 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		stopButton.iconPath = new vscode.ThemeIcon('debug-stop'); // 정지 아이콘 추가
 
-		const buildButton = new ScriptItem('Build Project for Hardware', vscode.TreeItemCollapsibleState.None, './docker/deploy.sh');
+		const buildButton = new ScriptItem('Upload', vscode.TreeItemCollapsibleState.None, './docker/deploy.sh');
 		buildButton.command = {
 			command: 'wearable-vscode-extension.runScriptHidden',
-			title: 'Build Project for Hardware',
+			title: 'Upload',
 			arguments: ['./docker/deploy.sh']
 		};
-		buildButton.iconPath = new vscode.ThemeIcon('gear'); // 톱니바퀴 아이콘 추가
+		buildButton.iconPath = new vscode.ThemeIcon('arrow-right'); // 화살표 아이콘 추가
 
 		return Promise.resolve([
 			newProjectButton,
