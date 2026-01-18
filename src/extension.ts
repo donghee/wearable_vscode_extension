@@ -64,10 +64,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const projectsProvider = new ProjectsProvider();
 	const tutorialsProvider = new TutorialsProvider();
-	context.subscriptions.push(
-    	vscode.window.registerTreeDataProvider('wearable-explorer-projects', projectsProvider),
-		vscode.window.registerTreeDataProvider('wearable-explorer-tutorials', tutorialsProvider)
-	);
+  context.subscriptions.push(
+    vscode.window.registerTreeDataProvider('wearable-explorer-projects', projectsProvider),
+    vscode.window.registerTreeDataProvider('wearable-explorer-tutorials', tutorialsProvider)
+  );
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('wearable-vscode-extension.openTutorialInEditor', 
@@ -190,18 +190,18 @@ class TutorialsProvider implements vscode.TreeDataProvider<TutorialItem> {
 	}
 
 	getChildren(): Thenable<TutorialItem[]> {
-		const tutorial1 = new TutorialItem('Getting Started Wearable Robot', vscode.TreeItemCollapsibleState.None);
+		const tutorial1 = new TutorialItem('New Wearable Robot', vscode.TreeItemCollapsibleState.None);
 		tutorial1.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
-			title: 'Open Tutorial',
-			arguments: ['Getting Started', 'http://localhost:5005']
+			title: 'New Wearable Robot',
+			arguments: ['New Wearable Robot', 'http://localhost:5005']
 		};
 
-		const tutorial2 = new TutorialItem('Tutorial: ROS', vscode.TreeItemCollapsibleState.None);
+		const tutorial2 = new TutorialItem('Wearable Robot API', vscode.TreeItemCollapsibleState.None);
 		tutorial2.command = {
 			command: 'wearable-vscode-extension.openTutorialInEditor',
-			title: 'Open Tutorial',
-			arguments: ['ROS', 'https://wiki.ros.org']
+			title: 'Open Wearable Robot API',
+			arguments: ['Wearable Robot API', 'http://localhost:5000/api/docs']
 		};
 	
 		/*
