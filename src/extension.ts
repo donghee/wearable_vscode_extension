@@ -135,13 +135,23 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 		};
 		stopButton.iconPath = new vscode.ThemeIcon('debug-stop'); // 정지 아이콘 추가
 
-		const buildButton = new ScriptItem('Upload', vscode.TreeItemCollapsibleState.None, './docker/deploy.sh');
-		buildButton.command = {
+		const deployButton = new ScriptItem('Upload', vscode.TreeItemCollapsibleState.None, './docker/deploy.sh');
+		deployButton.command = {
 			command: 'wearable-vscode-extension.runScriptHidden',
 			title: 'Upload',
 			arguments: ['./docker/deploy.sh']
 		};
-		buildButton.iconPath = new vscode.ThemeIcon('arrow-right'); // 화살표 아이콘 추가
+		deployButton.iconPath = new vscode.ThemeIcon('arrow-right'); // 화살표 아이콘 추가
+
+		const TwinButton = new ScriptItem('DigitalTwin', vscode.TreeItemCollapsibleState.None, './docker/digital-twin.sh');
+		TwinButton.command = {
+			command: 'wearable-vscode-extension.runScriptHidden',
+			title: 'DigitalTwin',
+			arguments: ['./docker/digital-twin.sh']
+		};
+		TwinButton.iconPath = new vscode.ThemeIcon('person'); // 사람 아이콘 추가
+
+
 
 		return Promise.resolve([
 			newProjectButton,
@@ -149,7 +159,8 @@ class ProjectsProvider implements vscode.TreeDataProvider<ProjectItem> {
 			simulatorButton,
 			controllerButton,
 			stopButton,
-			buildButton,
+			deployButton,
+      TwinButton
 		]);
 	}
 }
